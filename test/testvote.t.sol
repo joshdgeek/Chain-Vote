@@ -7,8 +7,17 @@ import {VoteContract} from "../src/chain-vote.sol";
 
 contract CounterTest is Test {
     VoteContract public voteContract;
+    address admin;
 
     function setUp() public {
         voteContract = new VoteContract(msg.sender);
+        admin = msg.sender;
+    }
+
+    function testVotecount() public {
+        vm.prank(admin);
+        voteContract.setExpectedVoteCounts(1000);
+
+        assertEq(voteContract.totalNmberOfExpectedVotes(), 1000);
     }
 }
